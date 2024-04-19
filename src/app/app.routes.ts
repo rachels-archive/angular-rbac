@@ -7,6 +7,6 @@ import { UserListComponent } from './components/user-list/user-list.component';
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'resgister', component: RegisterComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'users', component: UserListComponent },
 ];
