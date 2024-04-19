@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '../material.module';
 
 @Component({
@@ -13,8 +13,6 @@ import { MaterialModule } from '../material.module';
   imports: [
     CommonModule,
     RouterOutlet,
-    BrowserModule,
-    BrowserAnimationsModule,
     ReactiveFormsModule,
     HttpClientModule,
     MaterialModule,
