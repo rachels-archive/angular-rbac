@@ -40,12 +40,12 @@ export class RegisterComponent {
 
   confirmRegistration() {
     if (this.registrationForm) {
-      this.authService
-        .createUser(this.registrationForm.value)
-        .subscribe((res) => {
-          this.snackBar.open('User registered successfully');
-          this.router.navigate(['login']);
-        });
+      //remove confirmation password before creatinf user
+      const { confirmPassword, ...userDetails } = this.registrationForm.value;
+      this.authService.createUser(userDetails).subscribe((res) => {
+        this.snackBar.open('User registered successfully');
+        this.router.navigate(['login']);
+      });
     } else {
       this.snackBar.open('Please enter valid inputs');
     }

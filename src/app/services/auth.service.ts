@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { catchError, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +14,12 @@ export class AuthService {
     return this.http.get(this.apiUrl);
   }
 
-  getUserById(id: Number) {
-    return this.http.get(`${this.apiUrl}/${id}`);
+  getUserById(id: string) {
+    return this.http.get(`${this.apiUrl}/${id}`).pipe(
+      catchError((error: any) => {
+        return throwError('User Not Found.');
+      })
+    );
   }
 
   createUser(userData: any) {
