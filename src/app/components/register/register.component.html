@@ -1,1 +1,71 @@
-<p>register works!</p>
+<mat-card>
+  <mat-card-title>Create An Account</mat-card-title>
+  <mat-card-content>
+    <form
+      class="registration-form"
+      [formGroup]="registrationForm"
+      (ngSubmit)="confirmRegistration()"
+    >
+      <mat-form-field class="example-full-width">
+        <mat-label>Username</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Enter name here"
+          formControlName="id"
+        />
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Full Name</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Enter email here"
+          formControlName="name"
+        />
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          type="email"
+          placeholder="Enter name here"
+          formControlName="email"
+        />
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Password</mat-label>
+        <input
+          type="password"
+          matInput
+          placeholder="Enter name here"
+          formControlName="password"
+        />
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Confirm Password</mat-label>
+        <input
+          type="password"
+          matInput
+          placeholder="Enter name here"
+          formControlName="confirmPassword"
+        />
+      </mat-form-field>
+
+      <div>
+        <button mat-raised-button color="accent">Submit</button>
+      </div>
+
+      <div>
+        <p>
+          <span>Already an account?</span>
+          <a routerLink="/login" routerLinkActive="router-link-active">Login</a>
+        </p>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
