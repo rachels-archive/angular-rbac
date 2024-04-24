@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, throwError, of } from 'rxjs';
 import { User } from '../types/User';
 
 @Injectable({
@@ -42,5 +42,10 @@ export class AuthService {
   getUserRole() {
     const role = sessionStorage.getItem('userrole');
     return role !== null ? role.toString() : '';
+  }
+
+  logout() {
+    sessionStorage.clear();
+    return of({ success: false, role: '' });
   }
 }

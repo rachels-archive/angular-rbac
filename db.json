@@ -13,8 +13,8 @@
       "name": "user1",
       "email": "user1@test.com",
       "password": "12345",
-      "role": "",
-      "isActive": false
+      "role": "developer",
+      "isActive": true
     }
   ]
 }

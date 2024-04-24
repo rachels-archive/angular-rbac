@@ -6,7 +6,7 @@ import { Router, RouterModule } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { map } from 'rxjs/operators';
+import { map, of } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -59,10 +59,13 @@ export class LoginComponent {
                 sessionStorage.setItem('userrole', res.role);
                 this.router.navigate(['']);
               }
+
+              return of({ success: true, role: res.role });
             } else {
               this.snackBar.open('Invalid credentials. Try again.', 'Dismiss', {
                 duration: 3000,
               });
+              return of({ success: false });
             }
           },
           (error) => {
