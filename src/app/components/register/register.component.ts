@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {
+  FormBuilder,
+  ReactiveFormsModule,
+  Validators,
+  FormGroup,
+} from '@angular/forms';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthService } from '../../services/auth.service';
 import { Router, RouterModule } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
@@ -14,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatInputModule,
     MatCardModule,
     MatButtonModule,
+    MatSnackBarModule,
     ReactiveFormsModule,
     RouterModule,
   ],
@@ -28,26 +34,46 @@ export class RegisterComponent {
     private router: Router
   ) {}
 
-  registrationForm = this.formBuilder.group({
-    id: ['', [Validators.required, Validators.minLength(5)]],
-    name: ['', Validators.required],
-    email: ['', [Validators.email, Validators.required]],
-    password: ['', [Validators.required, Validators.minLength(5)]],
-    confirmPassword: ['', [Validators.required, Validators.minLength(5)]],
-    role: ['', Validators.required],
-    isActive: [false],
-  });
+  registrationForm = this.formBuilder.group(
+    {
+      id: ['', [Validators.required, Validators.minLength(5)]],
+      name: ['', [Validators.required, Validators.minLength(5)]],
+      email: ['', [Validators.email, Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(5)]],
+      confirmPassword: ['', [Validators.required]],
+      role: [''],
+      isActive: [false],
+    },
+    { validator: this.ConfirmedValidator('password', 'confirmPassword') }
+  );
+
+  ConfirmedValidator(controlName: string, matchingControlName: string) {
+    return (formGroup: FormGroup) => {
+      const control = formGroup.controls[controlName];
+      const matchingControl = formGroup.controls[matchingControlName];
+      if (matchingControl.errors && !matchingControl.errors['mismatch']) {
+        return;
+      }
+      if (control.value !== matchingControl.value) {
+        matchingControl.setErrors({ mismatch: true });
+      } else {
+        matchingControl.setErrors(null);
+      }
+    };
+  }
 
   confirmRegistration() {
-    if (this.registrationForm) {
-      //remove confirmation password before creatinf user
+    if (this.registrationForm.valid) {
+      //remove confirmation password before creating user
       const { confirmPassword, ...userDetails } = this.registrationForm.value;
       this.authService.createUser(userDetails).subscribe((res) => {
-        this.snackBar.open('User registered successfully');
+        this.snackBar.open('User created successfully.', '', {
+          duration: 3000,
+        });
         this.router.navigate(['login']);
       });
     } else {
-      this.snackBar.open('Please enter valid inputs');
+      console.log('invalid');
     }
   }
 }

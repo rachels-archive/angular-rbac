@@ -14,6 +14,12 @@
           placeholder="Enter name here"
           formControlName="id"
         />
+
+        @if(registrationForm.get('id')?.hasError('required')) {
+        <mat-error> Username is required </mat-error>
+        } @else if(registrationForm.get('id')?.hasError('minlength')) {
+        <mat-error> Username has to be at least 5 characters. </mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field class="example-full-width">
@@ -24,6 +30,12 @@
           placeholder="Enter email here"
           formControlName="name"
         />
+
+        @if(registrationForm.get('name')?.hasError('required')) {
+        <mat-error> Full name is required </mat-error>
+        } @else if(registrationForm.get('name')?.hasError('minlength')) {
+        <mat-error> Full name has to be at least 5 characters. </mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field class="example-full-width">
@@ -34,6 +46,11 @@
           placeholder="Enter name here"
           formControlName="email"
         />
+        @if(registrationForm.get('email')?.hasError('required')) {
+        <mat-error> Email is required </mat-error>
+        } @else if(registrationForm.get('email')?.hasError('email')) {
+        <mat-error> Invalid email format. </mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field class="example-full-width">
@@ -44,6 +61,11 @@
           placeholder="Enter name here"
           formControlName="password"
         />
+        @if(registrationForm.get('password')?.hasError('required')) {
+        <mat-error> Password is required </mat-error>
+        } @else if(registrationForm.get('password')?.hasError('minlength')) {
+        <mat-error> Password has to be at least 5 characters. </mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field class="example-full-width">
@@ -54,6 +76,12 @@
           placeholder="Enter name here"
           formControlName="confirmPassword"
         />
+        @if(registrationForm.get('confirmPassword')?.hasError('required')) {
+        <mat-error> Confirmation password is required </mat-error>
+        <!-- prettier-ignore -->
+        } @else if(registrationForm.get('confirmPassword')?.hasError('mismatch')) {
+        <mat-error> Does not match with password. </mat-error>
+        }
       </mat-form-field>
 
       <div>
