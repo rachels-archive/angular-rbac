@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
+import { User } from '../types/User';
 
 @Injectable({
   providedIn: 'root',
@@ -10,25 +11,36 @@ export class AuthService {
 
   apiUrl = 'http://localhost:3000/users';
 
-  getAllUsers() {
-    return this.http.get(this.apiUrl);
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.apiUrl);
   }
 
-  getUserById(id: string) {
-    return this.http.get(`${this.apiUrl}/${id}`).pipe(
+  getUserById(id: string): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/${id}`).pipe(
       catchError((error: any) => {
         return throwError('User Not Found.');
       })
     );
   }
 
-  createUser(userData: any) {
-    return this.http.post(this.apiUrl, userData);
+  createUser(userData: User) {
+    return this.http.post<User>(this.apiUrl, userData);
   }
 
   updateUser(id: any, userData: any) {
-    return this.http.put(`${this.apiUrl}/${id}`, userData);
+    return this.http.put<User>(`${this.apiUrl}/${id}`, userData);
   }
 
-  deleteUser() {}
+  deleteUser(id: string) {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+
+  isLoggedIn() {
+    return sessionStorage.getItem('username') !== null;
+  }
+
+  getUserRole() {
+    const role = sessionStorage.getItem('userrole');
+    return role !== null ? role.toString() : '';
+  }
 }
