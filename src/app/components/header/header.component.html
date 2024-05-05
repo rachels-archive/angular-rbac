@@ -1,0 +1,9 @@
+<div class="header">
+  <h2>Role Based Auth</h2>
+
+  @if (isLoggedIn) {
+  <a (click)="logout()">Log out</a>
+  } @else {
+  <a routerLink="/login">log in</a>
+  }
+</div>

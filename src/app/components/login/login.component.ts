@@ -6,7 +6,6 @@ import { Router, RouterModule } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { map, of } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -34,7 +33,7 @@ export class LoginComponent {
     id: ['', [Validators.required, Validators.minLength(5)]],
     password: ['', [Validators.required, Validators.minLength(5)]],
   });
-
+  /*
   confirmLogin() {
     if (this.loginForm.valid) {
       const loginId = this.loginForm.value.id!;
@@ -74,6 +73,28 @@ export class LoginComponent {
             });
           }
         );
+    }
+
+    
+  }*/
+  confirmLogin() {
+    if (this.loginForm.valid) {
+      const loginId = this.loginForm.value.id!;
+      const loginPassword = this.loginForm.value.password!;
+      this.authService.login(loginId, loginPassword).subscribe(
+        (res: any) => {
+          if (res.success) {
+            this.router.navigate(['']);
+          } else {
+            // Handle invalid login
+            console.error(res.message);
+          }
+        },
+        (error) => {
+          // Handle HTTP errors
+          console.error(error);
+        }
+      );
     }
   }
 }

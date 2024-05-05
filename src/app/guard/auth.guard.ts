@@ -3,7 +3,6 @@ import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 export const authGuard: CanActivateFn = (route, state) => {
-  //const currentPath = route.url[0].path;
   const router = inject(Router);
   const service = inject(AuthService);
 
@@ -15,13 +14,12 @@ export const authGuard: CanActivateFn = (route, state) => {
 
     if (route.data['role'] && route.data['role'].indexOf(userRole) === -1) {
       alert('access denied');
-      router.navigate(['/login']);
       return false;
     } else {
       return true;
     }
   } else {
-    alert('access denied');
+    alert('User not logged in');
     router.navigate(['/login']);
     return false;
   }
